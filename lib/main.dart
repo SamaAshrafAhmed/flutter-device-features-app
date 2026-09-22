@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_device_features_app/screens/device_info_screen.dart';
 import 'package:flutter_device_features_app/screens/image_gallery_screen.dart';
 
 void main() {
@@ -10,9 +11,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: ImageGalleryScreen(),
+      home: DeviceInfoScreen(),
     );
   }
 }
