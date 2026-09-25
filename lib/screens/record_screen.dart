@@ -1,5 +1,7 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_device_features_app/screens/google_map_screen.dart';
+import 'package:flutter_device_features_app/widgets/navigation_text_button.dart';
 import 'package:record/record.dart';
 
 class RecordScreen extends StatefulWidget {
@@ -14,8 +16,8 @@ class _RecordScreenState extends State<RecordScreen> {
   final player = AudioPlayer();
   final record = AudioRecorder();
   bool recorded = false;
-  final path =
-      '/storage/emulated/0/Download/myFile4.m4a'; // Start recording to file
+  // Keep one known output path so the playback action can open the latest take.
+  final path = '/storage/emulated/0/Download/myFile4.m4a';
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +36,8 @@ class _RecordScreenState extends State<RecordScreen> {
             recorded
                 ? TextButton(
                     onPressed: () async {
+                      // Playback is exposed only after stop() confirms a file
+                      // was produced, so the player has a valid source path.
                       await player.play(DeviceFileSource(path));
                     },
                     child: Text("Play Audio"),
@@ -42,21 +46,19 @@ class _RecordScreenState extends State<RecordScreen> {
 
             TextButton(
               onPressed: () async {
+                // The recorder package requests microphone access before capture.
                 if (await record.hasPermission() && !isRecording) {
+                  // Saving directly to the shared Downloads location makes the
+                  // demo recording visible outside the app on Android.
                   await record.start(const RecordConfig(), path: path);
-                  // ... or to stream
-                  // final stream = await record.startStream(
-                  //   const RecordConfig(encoder: AudioEncoder.pcm16bits),
-                  // );
+
                   setState(() {
                     isRecording = true;
                   });
                 } else if (isRecording == true) {
                   // Stop recording...
-                  final path = await record.stop();
-                  // // ... or cancel it (and implicitly remove file/blob).
-                  // await record.cancel();
-                  // record.dispose();
+                  await record.stop();
+
                   setState(() {
                     isRecording = false;
                     recorded = true;
@@ -69,6 +71,10 @@ class _RecordScreenState extends State<RecordScreen> {
                 fixedSize: Size(200, 50),
               ),
               child: Text(isRecording ? "Stop" : "Record Audio"),
+            ),
+            NavigationTextButton(
+              text: "To Google Map Screen",
+              destination: GoogleMapScreen(),
             ),
           ],
         ),

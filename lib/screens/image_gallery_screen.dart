@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_device_features_app/screens/record_screen.dart';
+import 'package:flutter_device_features_app/widgets/navigation_text_button.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ImageGalleryScreen extends StatefulWidget {
@@ -24,7 +26,7 @@ class _ImageGalleryScreenState extends State<ImageGalleryScreen> {
       body: Column(
         children: [
           SizedBox(
-            height: 550,
+            height: 500,
             child: images.isNotEmpty
                 ? ListView.builder(
                     itemCount: images.length,
@@ -54,12 +56,19 @@ class _ImageGalleryScreenState extends State<ImageGalleryScreen> {
             ),
             child: Text("Pick Images"),
           ),
+
+          NavigationTextButton(
+            text: "Got to Recording Screen",
+            destination: RecordScreen(),
+          ),
         ],
       ),
     );
   }
 
   Future<void> pickImages() async {
+    // Use the operating system picker so the app receives only the selected
+    // files instead of requesting broad storage access.
     final List<XFile> imagesPaths = await picker.pickMultiImage();
     for (var img in imagesPaths) {
       images.add(File(img.path));

@@ -1,5 +1,7 @@
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_device_features_app/screens/image_gallery_screen.dart';
+import 'package:flutter_device_features_app/widgets/navigation_text_button.dart';
 
 class DeviceInfoScreen extends StatefulWidget {
   new({super.key});
@@ -14,10 +16,13 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
   @override
   void initState() {
     super.initState();
+    // This screen demonstrates Android-specific metadata, so query the plugin
+    // once at screen startup instead of polling the device repeatedly.
     getDeviceInfo();
   }
 
   getDeviceInfo() async {
+    // Reading model and OS metadata does not require a runtime permission.
     deviceInfo = await deviceInfoPlugin.androidInfo;
     setState(() {});
   }
@@ -37,6 +42,11 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
                 children: [
                   Text("Model Name: ${deviceInfo!.model}"),
                   Text("OS Version: ${deviceInfo!.version.release}"),
+                  SizedBox(height: 10),
+                  NavigationTextButton(
+                    text: "To Image Gallery Screen",
+                    destination: ImageGalleryScreen(),
+                  ),
                 ],
               )
             : CircularProgressIndicator(),

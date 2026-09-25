@@ -59,7 +59,7 @@
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs access to your camera to take photos.</string>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>This app needs access to your microphone to record videos.</string>
+	<string>This app needs access to your microphone to record audios.</string>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>

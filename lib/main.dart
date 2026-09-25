@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_device_features_app/screens/record_screen.dart';
+import 'package:flutter_device_features_app/screens/device_info_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: RecordScreen(),
+      home: DeviceInfoScreen(),
     );
   }
 }

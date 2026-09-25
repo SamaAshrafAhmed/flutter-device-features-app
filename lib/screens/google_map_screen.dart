@@ -11,6 +11,8 @@ class GoogleMapScreen extends StatefulWidget {
 }
 
 class _GoogleMapScreenState extends State<GoogleMapScreen> {
+  // GoogleMap provides its controller after the native map surface is ready.
+  // A completer keeps that asynchronous handoff available for future actions.
   final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
   List<Marker> markers = [
@@ -27,6 +29,7 @@ class _GoogleMapScreenState extends State<GoogleMapScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // This demo shows a fixed map position of Cairo Governorate; it does not request device location.
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
